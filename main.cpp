@@ -33,11 +33,11 @@ void funcaoQuadratica(float a, float b, float c) {
     //funcao quadratica = a.x**2 + bx + c
 
 
-    int x;
-    float y, prev_x, prev_y;
+    int x, y;
+    float prev_x, prev_y;
     float xI, xII;
     float escalaX = 20.0;
-    float escalaY = 20.0;
+    float escalaY = 5.0;
     float incremento_parabola = 0.01;
     float centerXs = getmaxx() / 2.0;
     float centerYs = getmaxy() / 2.0;
@@ -68,16 +68,14 @@ void funcaoQuadratica(float a, float b, float c) {
     }
 
 
-    // Calcular o primeiro ponto
-    prev_x = -centerXs / escalaX;
-    prev_y = a * prev_x * prev_x + b * prev_x + c;
+    for (x = centerXs - 300; x <= centerXs + 300; x++) {
+        float x_real = (x - centerXs) / escalaX;  // Converte x para escala real
+        float y_real = a * x_real * x_real + b * x_real + c; // Calcula y na escala real
 
-    // Desenhar a parábola como uma série de linhas entre pontos adjacentes
-    for (x = -centerXs / escalaX + incremento_parabola; x < centerXs / escalaX; x += incremento_parabola) {
-        y = a * x * x + b * x + c;
-        line(centerXs + prev_x * escalaX, centerYs - prev_y * escalaY, centerXs + x * escalaX, centerYs - y * escalaY);
-        prev_x = x;
-        prev_y = y;
+        int tela_x = x;
+        int tela_y = centerYs - (y_real * escalaX); // Converte y para coordenada de tela
+
+        putpixel(tela_x, tela_y, RED); //Desenhando os pontos
     }
 
 }
